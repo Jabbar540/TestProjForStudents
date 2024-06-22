@@ -7,11 +7,17 @@ export default function Details() {
   console.log(params)
 
   const handleRoute = () => {
-    router.push('/showImage');
+    router.push('/ViewImage');
   };
 
   return (
     <View style={styles.container}>
+      <Text>
+        Age:{params["age"]}
+      </Text>
+      <Text>
+      name:{params.name}
+      </Text>
       <Text>
         Update the title
       </Text>
