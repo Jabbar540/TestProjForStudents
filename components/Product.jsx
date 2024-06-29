@@ -1,7 +1,8 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import { Link } from 'expo-router'
 
-export default function Product({data={}}) {
+export default function Product({data={},onPress=()=>""}) {
   return (
       <View style={styles.container}>
         <Image source={data.image} style={styles.imageStyle}/>
@@ -9,6 +10,12 @@ export default function Product({data={}}) {
           <Text style={styles.title}>{data.title}</Text>
           <Text style={styles.subtitle}>${data.subtitle}</Text>
         </View>
+        <Link  href={{
+                 pathname: "/Details",
+                 params: data
+        }}>
+            See details
+        </Link>
       </View>
   )
 }
