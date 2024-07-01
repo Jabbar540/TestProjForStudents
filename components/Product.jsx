@@ -10,8 +10,10 @@ export default function Product({data={},onPress=()=>""}) {
           <Text style={styles.title}>{data.title}</Text>
           <Text style={styles.subtitle}>${data.subtitle}</Text>
         </View>
-        <Link  href={{
-                 pathname: "/Details",
+        <Link  
+        style={{marginLeft:16}}
+        href={{
+                 pathname: "/details",
                  params: data
         }}>
             See details

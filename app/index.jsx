@@ -1,7 +1,8 @@
-import { FlatList, Image, Text, View, } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import LayoutWrapper from "../components/LayoutWrapper";
 import Product from "../components/Product";
 import { useRouter } from 'expo-router';
+import Icons from '@expo/vector-icons/Entypo';
 
 const data=[
   {
@@ -45,6 +46,9 @@ export default function Home() {
   const route=useRouter()
   return (
     <LayoutWrapper backgroundColor={'green'} headerText={"Home"} textColor='white'>
+      <TouchableOpacity onPress={()=>route.navigate("CreateProduct")} style={styles.plusView}>
+        <Icons name="plus" size={32} color="red" />
+      </TouchableOpacity>
       <FlatList
        data={data}
        keyExtractor={(item)=>item.id}
@@ -55,3 +59,27 @@ export default function Home() {
     </LayoutWrapper>
   );
 }
+
+const styles = StyleSheet.create({
+  plusView:{
+    position:'absolute',
+    zIndex:100,
+    bottom:50,
+    right:20,
+    width:50,
+    height:50,
+    borderRadius:25,
+    backgroundColor:'white',
+    justifyContent:'center',
+    alignItems:'center',
+    shadowColor: "#000",
+    shadowOffset: {
+    	width: 0,
+    	height: 11,
+    },
+    shadowOpacity: 0.55,
+    shadowRadius: 14.78,
+    
+    elevation: 22,
+  }
+})
