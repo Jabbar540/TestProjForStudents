@@ -46,7 +46,7 @@ export default function Home() {
   const route=useRouter()
   return (
     <LayoutWrapper backgroundColor={'green'} headerText={"Home"} textColor='white'>
-      <TouchableOpacity onPress={()=>route.navigate("CreateProduct")} style={styles.plusView}>
+      <TouchableOpacity onPress={()=>route.navigate("ImagePicker")} style={styles.plusView}>
         <Icons name="plus" size={32} color="red" />
       </TouchableOpacity>
       <FlatList
