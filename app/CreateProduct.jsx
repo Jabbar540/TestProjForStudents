@@ -3,8 +3,8 @@ import { View, StyleSheet, Text, ScrollView, TextInput,Image, TouchableOpacity }
 import LayoutWrapper from '../components/LayoutWrapper';
 import CommonButton from '../components/CommonButton';
 import { Stack } from 'expo-router'; 
-import { Entypo } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
+import CommonInput from '../components/CommonInput';
+import ImagePicker from '../components/ImagePicker';
 
 export default function CreateProduct() {
   const [title, setTitle] = useState('');
@@ -12,24 +12,15 @@ export default function CreateProduct() {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState([]);
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsMultipleSelection:true
-    });
-
-    if (!result.canceled) {
-    //   setImage(result.assets);
-      setImage([...image,...result.assets]);
-    }
-  };
-  
   const filterImage=(arg)=>{
     const newImage=[...image]
     const filterImage=newImage.filter(i=>i.uri !== arg.uri)
 
     setImage(filterImage)
+  }
+
+  const savePress=()=>{
+    console.log(image,title,description,price)
   }
 
   return (
@@ -45,45 +36,32 @@ export default function CreateProduct() {
       <ScrollView>       
         <View style={styles.head}>
           <Text style={styles.text}>Add a Product</Text>
-          <View style={{marginBottom:10,flexDirection:'row'}}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-               <TouchableOpacity onPress={pickImage} style={[styles.imagePicker]}>
-                 <Entypo name='images' size={75}/>
-               </TouchableOpacity>
-               {image.length > 0 && image.map((i)=>(
-                <View>
-                   <Image source={{ uri: i.uri }} style={styles.imagePicker} />
-                   <TouchableOpacity onPress={()=>filterImage(i)} style={styles.cross}>
-                     <Entypo name='circle-with-cross' size={25} color={'red'}/>
-                   </TouchableOpacity>
-                </View>
-                 )) 
-             }
-            </ScrollView>
-          </View>
-          <Text style={styles.headline}>Title</Text>
-          <TextInput
-            style={styles.input}
+          <ImagePicker 
+            image={image} 
+            setImage={setImage} 
+            crossPress={(arg)=>filterImage(arg)}
+          />
+          <CommonInput
+            titleText='Title'
             value={title}
             onChangeText={text => setTitle(text)}
             placeholder="Enter Title"
           />
-          <Text style={styles.headline}>Price</Text>
-          <TextInput
-            style={styles.input}
+          <CommonInput
+            titleText='Price'
             value={price}
             onChangeText={text => setPrice(text)}
             placeholder="Enter Price"
           />
-          <Text style={styles.headline}>Description</Text>
-          <TextInput
-            style={styles.describe}
+          <CommonInput
+            titleText='Description'
             value={description}
+            multiline={true}
             onChangeText={text => setDescription(text)}
             placeholder="Add a Description"
-            
+            inputStyle={{height:130}}
           />
-          <CommonButton text={'Save'}/>
+          <CommonButton onPress={savePress} text={'Save'}/>
         </View>
       </ScrollView>
     </LayoutWrapper>
@@ -112,34 +90,7 @@ const styles = StyleSheet.create({
     margin: 30,
   },
   image:{
-    height:77,
-    
-        
-  },
-  input: {
-    height: 50,
-    width: "90%",
-    borderColor: "black",
-    borderWidth: 2,
-    margin: 10,
-    borderRadius: 10,
-    paddingLeft: 10,
-  },
-  describe: {
-    height: 100,
-    width: "90%",
-    borderColor: "black",
-    borderWidth: 2,
-    margin: 10,
-    borderRadius: 10,
-    paddingLeft: 10,
-    paddingTop: 10,
-  },
-  headline: {
-    color: 'black',
-    fontSize: 20,
-    marginLeft: 20,
-    fontWeight: 'bold',
+    height:77,     
   },
   btn: {
     backgroundColor: 'orange',
@@ -160,19 +111,5 @@ const styles = StyleSheet.create({
     marginRight: 40,
     borderRadius: 10,
   },
-  imagePicker:{
-    borderWidth:1,
-    borderRadius:12,
-    width:150,
-    height:150,
-    justifyContent:'center',
-    alignItems:'center',
-    marginLeft:20
-  },
-  cross:{
-    position:'absolute',
-    top:0,
-    right:0,
-    zIndex:1000000000,
-  }
+ 
 });
