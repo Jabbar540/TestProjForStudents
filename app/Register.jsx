@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CommonButton from '../components/CommonButton'
 import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -15,6 +15,16 @@ export default function Reg() {
 
 
   const route=useRouter()
+
+  const myFunction=()=>{
+    console.log("first time register screen load===>>>")
+  }
+
+  
+  useEffect(()=>{
+    myFunction()
+  },[])
+
 
   return (
     <View>
@@ -36,25 +46,15 @@ export default function Reg() {
             style={styles.titleinput}
             value={FirstName}
             onChangeText={text => setFirstName(text)}
-            placeholder="  First Name"
-            multiline={true}
+            placeholder="First Name"
           />
           <TextInput
            style={styles.titleinput}
             value={LastName}
             onChangeText={text => setLastName(text)}
-            placeholder="  Last Name"
-            multiline={true}
+            placeholder="Last Name"
           />
           </View>
-          <Text style={styles.inputhead}>Username</Text>
-          <TextInput
-            style={styles.input}
-            value={Username}
-            onChangeText={text => setUsername(text)}
-            placeholder="Enter Username"
-            multiline={true}
-          />
 
           <Text style={styles.inputhead}>Email</Text>
           <TextInput
@@ -62,7 +62,6 @@ export default function Reg() {
             value={email}
             onChangeText={text => setEmail(text)}
             placeholder="Enter your Email"
-            multiline={true}
           />
           <Text style={styles.headline}>Password</Text>
           <TextInput
@@ -95,7 +94,9 @@ export default function Reg() {
 const styles = StyleSheet.create({
   bg: {
     backgroundColor: 'green',
-    height: 250,
+    height: '30%',
+    borderBottomRightRadius:100,
+    borderBottomLeftRadius:100
   },
   header: {
     textAlign: 'center',
@@ -125,16 +126,13 @@ const styles = StyleSheet.create({
     fontSize:15,
     borderRadius: 30,
     width:'43%',
-    
     height:50,
-    justifyContent:'space-between'
-
+    paddingLeft:10
   },
   headinput:{
     flexDirection:'row',
     justifyContent:'space-evenly',
   },
-
   line: {
     color: 'white',
     textAlign: 'center',

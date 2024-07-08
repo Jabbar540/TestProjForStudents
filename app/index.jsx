@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CommonButton from '../components/CommonButton'
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -9,6 +9,15 @@ export default function Home() {
   const [password, setPassword] = useState('');
 
   const route=useRouter()
+
+  const myFunction=()=>{
+    console.log("first time login screen load===>>>")
+  }
+
+  
+  useEffect(()=>{
+    myFunction()
+  },[])
 
   return (
     <View>
@@ -24,7 +33,6 @@ export default function Home() {
           value={email}
           onChangeText={text => setEmail(text)}
           placeholder="Enter your Email"
-          multiline={true}
         />
         <Text style={styles.headline}>Password</Text>
         <TextInput
