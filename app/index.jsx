@@ -11,7 +11,7 @@ export default function Home() {
   const route=useRouter()
 
   const myFunction=()=>{
-    console.log("first time login screen load===>>>")
+    setEmail("jabbarahmad540@gmial.com")
   }
 
   
