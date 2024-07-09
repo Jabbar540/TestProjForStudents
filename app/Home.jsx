@@ -3,6 +3,8 @@ import LayoutWrapper from "../components/LayoutWrapper";
 import Product from "../components/Product";
 import { useRouter } from 'expo-router';
 import Icons from '@expo/vector-icons/Entypo';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const data=[
   {
@@ -43,14 +45,45 @@ const data=[
 ]
 
 export default function Home() {
-  const route=useRouter()
+  const route=useRouter();
+  const [post,setPost]=useState([])
+
+  const getPostData=async()=>{
+    try {
+      const url='https://jsonplaceholder.typicode.com/posts'
+      const response= await axios.get(url)
+      setPost(response.data)
+    } catch (error) {
+      console.log("errrr====>>",error)
+    }
+
+
+
+    // axios.get(url).then((response)=>{
+    //   console.log(response.data[0])
+    // }).catch(error=>console.log("errrr====>>",error))
+
+    // axios.get(url).then((response)=>{
+    //   console.log(response.data[0])
+    // }).catch(error=>console.log("errrr====>>",error))
+
+    // axios.get(url).then((response)=>{
+    //   console.log(response.data[0])
+    // }).catch(error=>console.log("errrr====>>",error))
+
+  }
+
+  useEffect(()=>{
+    getPostData()
+  },[])
+
   return (
     <LayoutWrapper backgroundColor={'green'} headerText={"Home"} textColor='white'>
       <TouchableOpacity onPress={()=>route.navigate("CreateProduct")} style={styles.plusView}>
         <Icons name="plus" size={32} color="red" />
       </TouchableOpacity>
       <FlatList
-       data={data}
+       data={post}
        keyExtractor={(item)=>item.id}
        renderItem={({item})=>(
         <Product data={item}/>

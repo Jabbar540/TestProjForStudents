@@ -5,10 +5,10 @@ import { Link } from 'expo-router'
 export default function Product({data={},onPress=()=>""}) {
   return (
       <View style={styles.container}>
-        <Image source={data.image} style={styles.imageStyle}/>
+        <Image source={require("../assets/images/Product.png")} style={styles.imageStyle}/>
         <View style={styles.textbox}>
           <Text style={styles.title}>{data.title}</Text>
-          <Text style={styles.subtitle}>${data.subtitle}</Text>
+          <Text style={styles.subtitle}>${data.body}</Text>
         </View>
         <Link  
         style={{marginLeft:16}}
