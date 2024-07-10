@@ -5,7 +5,7 @@ import { Link } from 'expo-router'
 export default function Product({data={},onPress=()=>""}) {
   return (
       <View style={styles.container}>
-        <Image source={require("../assets/images/Product.png")} style={styles.imageStyle}/>
+        <Image source={{uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOBsV42g6xBERph3Xp9pGPKJAqOmM4-_Lkig&s'}} style={styles.imageStyle}/>
         <View style={styles.textbox}>
           <Text style={styles.title}>{data.title}</Text>
           <Text style={styles.subtitle}>${data.price}</Text>

@@ -2,29 +2,39 @@
 import React, { useEffect, useState } from 'react';
 import CommonButton from '../components/CommonButton'
 import { useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import axios from 'axios';
 
 export default function Reg() {
   const [email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
-  const [ConfirmPassword, setConfirmPassword] = useState('');
-  const [FirstName, setFirstName] = useState('');
-  const [LastName, setLastName] = useState('');
-  const [Username, setUsername] = useState('');
-  
-
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const route=useRouter()
 
-  const myFunction=()=>{
-    console.log("first time register screen load===>>>")
+  const submitFunction=async()=>{
+    setLoading(true)
+    try {
+      const url='https://glamparlor.onrender.com/api/users/signup'
+      const body = {
+        "email":email,
+        "password":password,
+        "name":firstName+" "+lastName
+      }
+      console.log("api===>started")
+      const response=await axios.post(url,body)
+      ToastAndroid.show(response.data.message,ToastAndroid.BOTTOM)
+    } catch (error) {
+      console.log("err==>>>",error.response.data.message)
+      ToastAndroid.show(error.response.data.message,ToastAndroid.BOTTOM)
+
+    }finally{
+      setLoading(false)
+    }
   }
-
-  
-  useEffect(()=>{
-    myFunction()
-  },[])
-
 
   return (
     <View>
@@ -44,13 +54,13 @@ export default function Reg() {
           <View style={styles.headinput}>
           <TextInput
             style={styles.titleinput}
-            value={FirstName}
+            value={firstName}
             onChangeText={text => setFirstName(text)}
             placeholder="First Name"
           />
           <TextInput
            style={styles.titleinput}
-            value={LastName}
+            value={lastName}
             onChangeText={text => setLastName(text)}
             placeholder="Last Name"
           />
@@ -60,25 +70,30 @@ export default function Reg() {
           <TextInput
             style={styles.input}
             value={email}
+            autoCapitalize='none'
             onChangeText={text => setEmail(text)}
             placeholder="Enter your Email"
           />
           <Text style={styles.headline}>Password</Text>
           <TextInput
             style={styles.input}
-            value={Password}
+            value={password}
             onChangeText={text => setPassword(text)}
             placeholder="Enter your Password"
           />
           <Text style={styles.headline}>Confirm Password</Text>
           <TextInput
             style={styles.input}
-            value={ConfirmPassword}
+            value={confirmPassword}
             onChangeText={text => setConfirmPassword(text)}
             placeholder="Confirm your Password"
           />
           
-          <CommonButton text={'REGISTER'} btnStyle={{marginTop:30}}  onPress={()=>route.navigate("Home")}/>
+          <CommonButton 
+          loading={loading}
+          text={'REGISTER'} 
+          btnStyle={{marginTop:30}}  
+          onPress={submitFunction}/>
           <View style={styles.last}>
               <Text style={styles.press1}>Do you have an account? </Text>
             <TouchableOpacity>

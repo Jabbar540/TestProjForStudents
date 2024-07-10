@@ -1,10 +1,14 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
-export default function CommonButton({onPress,text,btnStyle={},textStyle={}}) {
+export default function CommonButton({onPress,text,btnStyle={},textStyle={},loading=false}) {
   return (
     <TouchableOpacity style={[styles.container,btnStyle]} onPress={onPress}>
-      <Text style={[styles.textStyle,textStyle]}>{text}</Text>
+      {
+        loading==true?
+        <ActivityIndicator/> :
+        <Text style={[styles.textStyle,textStyle]}>{text}</Text>
+      }
     </TouchableOpacity>
   )
 }
