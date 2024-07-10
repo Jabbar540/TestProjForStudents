@@ -23,15 +23,16 @@ export default function Details() {
       }}
       />
     <ScrollView>
-      <Image source={params.image} style={styles.imageStyle}/>
+      <Image source={require("../assets/images/Product.png")}style={styles.imageStyle}/>
       <View style={styles.textbox}>
         <Text style={styles.title}>{params.title}</Text>
-        <Text style={styles.subtitle}>${params.subtitle}</Text>
+        <Text style={styles.subtitle}>${params.price}</Text>
+        <Text style={styles.subtitle}>Id: {params.id}</Text>
       </View>
-      <Text style={[styles.description,styles.title]}>Description</Text>
+      <Text style={[styles.description,styles.title]}>Description:</Text>
       <Text style={styles.description}>
-        {params.descriptions}
-      </Text>
+        {params.description}</Text>
+      
     </ScrollView>
    </LayoutWrapper>
   )
@@ -55,7 +56,8 @@ subtitle:{
   fontWeight:'700'
 },
 description:{
-  margin:20,
+  margin:5,
   fontSize:20,
+  marginLeft:15,
 }
 })

@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import Icons from '@expo/vector-icons/Entypo';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Try } from 'expo-router/build/views/Try';
 
 const data=[
   {
@@ -48,17 +49,16 @@ export default function Home() {
   const route=useRouter();
   const [post,setPost]=useState([])
 
+
   const getPostData=async()=>{
     try {
-      const url='https://jsonplaceholder.typicode.com/posts'
+      const url='https://api.escuelajs.co/api/v1/products'
       const response= await axios.get(url)
       setPost(response.data)
     } catch (error) {
       console.log("errrr====>>",error)
+    
     }
-
-
-
     // axios.get(url).then((response)=>{
     //   console.log(response.data[0])
     // }).catch(error=>console.log("errrr====>>",error))
