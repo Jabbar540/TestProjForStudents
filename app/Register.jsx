@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import CommonButton from '../components/CommonButton'
 import { useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import axios from 'axios';
+import Toast from 'react-native-root-toast';
 
 export default function Reg() {
   const [email, setEmail] = useState('');
@@ -26,11 +27,13 @@ export default function Reg() {
       }
       console.log("api===>started")
       const response=await axios.post(url,body)
-      ToastAndroid.show(response.data.message,ToastAndroid.BOTTOM)
+      Toast.show(response.data.message, {
+        duration: Toast.durations.SHORT,
+      });
     } catch (error) {
-      console.log("err==>>>",error.response.data.message)
-      ToastAndroid.show(error.response.data.message,ToastAndroid.BOTTOM)
-
+      Toast.show(error.response.data.message, {
+        duration: Toast.durations.SHORT,
+      });
     }finally{
       setLoading(false)
     }

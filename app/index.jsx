@@ -3,21 +3,42 @@ import React, { useEffect, useState } from 'react';
 import CommonButton from '../components/CommonButton'
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Toast from 'react-native-root-toast';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const route=useRouter()
 
-  const myFunction=()=>{
-    setEmail("jabbarahmad540@gmial.com")
+  const loginFunction=async()=>{
+    setLoading(true)
+    try {
+      const url='https://glamparlor.onrender.com/api/auth'
+      const body = {
+        "email":email,
+        "password":password,
+      }
+      const response=await axios.post(url,body)
+      await AsyncStorage.setItem("name",response.data.user.name)
+      await AsyncStorage.setItem("email",response.data.user.email)
+      await AsyncStorage.setItem("token",response.data.token)
+      console.log("ress====?",response.data)
+      Toast.show("Login Successfully", {
+        duration: Toast.durations.SHORT,
+      });
+      route.push("Home")
+    } catch (error) {
+      Toast.show(error.response.data.message, {
+        duration: Toast.durations.SHORT,
+      });
+    }finally{
+      setLoading(false)
+    }
   }
-
-  
-  useEffect(()=>{
-    myFunction()
-  },[])
 
   return (
     <View>
@@ -31,6 +52,7 @@ export default function Home() {
         <TextInput
           style={styles.input}
           value={email}
+          autoCapitalize='none'
           onChangeText={text => setEmail(text)}
           placeholder="Enter your Email"
         />
@@ -44,7 +66,7 @@ export default function Home() {
         <TouchableOpacity>
            <Text style={styles.forget}>Forget Password?</Text>
         </TouchableOpacity>
-        <CommonButton text={'LOGIN'} btnStyle={{marginTop:30}}  onPress={()=>route.navigate("Home")}/>
+        <CommonButton loading={loading} text={'LOGIN'} btnStyle={{marginTop:30}}  onPress={loginFunction}/>
         <View style={styles.last}>
             <Text style={styles.press1}>Don't have an account? </Text>
           <TouchableOpacity onPress={()=>route.navigate("Register")}>

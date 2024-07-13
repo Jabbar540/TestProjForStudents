@@ -6,6 +6,7 @@ import Icons from '@expo/vector-icons/Entypo';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Try } from 'expo-router/build/views/Try';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const data=[
   {
@@ -52,6 +53,10 @@ export default function Home() {
 
   const getPostData=async()=>{
     try {
+      const name = await AsyncStorage.getItem("name")
+      const email = await AsyncStorage.getItem("email")
+      const token =  await AsyncStorage.getItem("token")
+      console.log("name",name,token,email)
       const url='https://api.escuelajs.co/api/v1/products'
       const response= await axios.get(url)
       setPost(response.data)
